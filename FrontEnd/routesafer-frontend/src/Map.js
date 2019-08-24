@@ -10,6 +10,9 @@ const MapWithAMarker = withScriptjs(withGoogleMap(props =>
     </GoogleMap>
 ));
 
+// "250 Fort York Blvd, Toronto, ON M5V 3K9"
+// "93 Front St E, Toronto, ON M5E 1C3"
+
 export default class Map extends React.Component {
 
     constructor(props){
@@ -39,8 +42,8 @@ export default class Map extends React.Component {
         fetch(link, {method: "POST", body: JSON.stringify(
             {
                 "locations": [
-                    "250 Fort York Blvd, Toronto, ON M5V 3K9",
-                    "93 Front St E, Toronto, ON M5E 1C3"
+                    this.state.origin,
+                    this.state.destination
                 ],
                 "maxRoutes": 200,
                 "timeOverage": 1000
@@ -51,8 +54,6 @@ export default class Map extends React.Component {
           console.log(data)
         })
         );
-        console.log(this.state.origin, this.state.destination);
-        //take values -> renders route 
     }
 
 
