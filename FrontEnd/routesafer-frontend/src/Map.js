@@ -7,7 +7,7 @@ const MapWithAMarker = withScriptjs(withGoogleMap(props =>
     <GoogleMap
         defaultZoom={12}
         defaultCenter={{ lat: 43.656761, lng:  -79.380727}}>
-        {props.showDirections? <Polyline path={props.directions}></Polyline> : null}
+        { props.showDirections? props.line : null }
     </GoogleMap>
 ));
 
@@ -24,6 +24,7 @@ export default class Map extends React.Component {
             routes: [],
             routeCards: [],
             showDirections: false,
+            displayedLine: null,
         }
 
         this.handleOriginChange = this.handleOriginChange.bind(this);
@@ -43,14 +44,24 @@ export default class Map extends React.Component {
     }
 
     handleViewRoute(index) {
-
+        this.setState({ showDirections: true, displayedLine: (
+        <Polyline 
+            //path={this.state.routes[index]}
+            path={[{lat:43.63708, lng:-79.407}, {lat:43.1, lng:-78.0}]}
+            geodesic={true}
+            options={{
+                strokeColor: "#ff2527",
+                strokeOpacity: 0.75,
+                strokeWeight: 2,
+            
+            }}/>) })
     }
 
     addCards(){
         let routeCards = [];
         for (let index = 0; index < this.state.routes.length; index++) {
             routeCards.push(
-            <Card>
+            <Card key={index}>
                 <Card.Body>
                     <Card.Title>Route { index + 1 }</Card.Title>
                     <Button onClick={this.handleViewRoute(index)}>View Route</Button>
@@ -75,7 +86,7 @@ export default class Map extends React.Component {
         .then(response => 
           response.json()
         ).then(data => {
-            this.setState({ routes: data.polyline, showDirections: true })
+            this.setState({ routes: data.polyline})
             console.log(data);
             this.addCards();
         });
@@ -110,7 +121,7 @@ export default class Map extends React.Component {
                             containerElement={<div style={{ height: `100vh`, width: '900px'}} />}
                             mapElement={<div style={{ height: `100vh`, width: '900px'}} />}
                             showDirections={ this.state.showDirections }
-                            directions={ this.state.route }
+                            line={ this.state.displayedLine }
                         />
                     </div>
                 </div>
