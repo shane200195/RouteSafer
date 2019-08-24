@@ -1,6 +1,8 @@
 import flask
 from flask import render_template, Flask, request, jsonify
 from flask_cors import CORS
+import requests
+import polyline
 
 app = Flask(__name__, template_folder="templates-flask-test")
 CORS(app)
@@ -13,13 +15,29 @@ app.config['SECRET_KEY'] = 's200195'
 
 @app.route("/")
 def start():
-    return render_template("index.html")
+   return render_template('index.html')
 
 @app.route("/test", methods=["POST"])
 def test():
-    val = request.get_json(force=True)['location']
-    print(val)
-    return "Hello"
+    from data_processing import analysis
+    polylines = []
+    Lat_and_Lng = []
+    test = requests.get('https://maps.googleapis.com/maps/api/directions/json?origin=250 Fort York Blvd, Toronto, ON M5V 3K9&destination=93 Front St E, Toronto, ON M5E 1C3&key=AIzaSyCHttcfy83akWGX0yXCX53DnrVN1anZFEM&alternatives=true').json()
+    routes = test['routes']
+    #print(len(Lat_and_Lng[4]))
+
+    for route in routes:
+        for leg in route['legs']:
+            for steps in leg['steps']:
+                polylines.append(steps['polyline']['points'])
+                Lat_and_Lng.append(polyline.decode(steps['polyline']['points']))
+                #print(polyline.decode(steps['polyline']['points']))
+
+    #maybe the original Lat_and_Lng are being mixed up
+    print(len(Lat_and_Lng[11]))
+    print(len(analysis(Lat_and_Lng)[11]))
+
+    return jsonify({'polyline' : Lat_and_Lng})
 
 #setting debug to true
 if __name__ == "__main__":

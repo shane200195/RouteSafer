@@ -35,22 +35,14 @@ export default class Map extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
-        const link = "http://www.mapquestapi.com/directions/v2/alternateroutes?key=cWoBbdQDVccb4o05En8naNgZkdvYis17"
-        fetch(link, {method: "POST", body: JSON.stringify(
-            {
-                "locations": [
-                    "250 Fort York Blvd, Toronto, ON M5V 3K9",
-                    "93 Front St E, Toronto, ON M5E 1C3"
-                ],
-                "maxRoutes": 200,
-                "timeOverage": 1000
-            }
-        )})
-        .then(response => 
-          response.json().then(data => {
-          console.log(data)
-        })
+        const link = "https://maps.googleapis.com/maps/api/directions/json?origin=250 Fort York Blvd, Toronto, ON M5V 3K9&destination=93 Front St E, Toronto, ON M5E 1C3&key=AIzaSyCHttcfy83akWGX0yXCX53DnrVN1anZFEM&alternatives=true"
+        fetch(link, {method: "GET"})
+            .then(response => 
+            response.json().then(data => {
+            console.log(data)
+            })
         );
+        //direction = Direction
         console.log(this.state.origin, this.state.destination);
         //take values -> renders route 
     }
