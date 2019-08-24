@@ -1,13 +1,37 @@
-import { withScriptjs, withGoogleMap, GoogleMap,  DirectionsRenderer, Polyline } from "react-google-maps";
+import { withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer, Polyline } from "react-google-maps";
 import { Form, Button, Card, Row, Col, Container } from 'react-bootstrap';
 import React from 'react';
 import './Map.css'
 
+class RouteCard extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    handleViewRoute(event, index) {
+
+    }
+
+    render() {
+        return (
+            <Card>
+                <Card.Body>
+                    <Card.Title>Route {this.props.index + 1}</Card.Title>
+                    <Button onClick={this.handleViewRoute(this.props.index)}>View Route</Button>
+                    <Card.Subtitle>Rating: blah</Card.Subtitle>
+                </Card.Body>
+            </Card>
+        );
+    }
+}
+
+
 const MapWithAMarker = withScriptjs(withGoogleMap(props =>
     <GoogleMap
         defaultZoom={12}
-        defaultCenter={{ lat: 43.656761, lng:  -79.380727}}>
-        { props.showDirections? props.line : null }
+        defaultCenter={{ lat: 43.656761, lng: -79.380727 }}>
+        {props.showDirections ? props.line : null}
     </GoogleMap>
 ));
 
@@ -16,7 +40,7 @@ const MapWithAMarker = withScriptjs(withGoogleMap(props =>
 
 export default class Map extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             origin: '',
@@ -46,32 +70,56 @@ export default class Map extends React.Component {
     handleViewRoute(index) {
         let processed_lat_lng = []
         console.log(this.state.routes[index]);
-        for(let i=0; i<this.state.routes[index].length; i++){
+        for (let i = 0; i < this.state.routes[index].length; i++) {
             //console.log(this.state.routes[index][i][0])
-            processed_lat_lng.push({lat:this.state.routes[index][i][0], lng: this.state.routes[index][i][1]})
+            processed_lat_lng.push({ lat: this.state.routes[index][i][0], lng: this.state.routes[index][i][1] })
         }
         //console.log(processed_lat_lng)
-        this.setState({ showDirections: true, displayedLine: (
-        <Polyline 
-            path={processed_lat_lng}
-            //path={[{lat:43.63708, lng:-79.407}, {lat:43.1, lng:-78.0}]}
-            geodesic={true}
-            options={{
-                strokeColor: "#ff2527",
-                strokeOpacity: 0.75,
-                strokeWeight: 2,
-            
-            }}/>) })
+        this.setState({
+            showDirections: true, displayedLine: (
+                <Polyline
+                    path={processed_lat_lng}
+                    //path={[{lat:43.63708, lng:-79.407}, {lat:43.1, lng:-78.0}]}
+                    geodesic={true}
+                    options={{
+                        strokeColor: "#ff2527",
+                        strokeOpacity: 0.75,
+                        strokeWeight: 2,
+
+                    }} />)
+        })
     }
 
-    addCards(){
+    addCards() {
         let routeCards = [];
-        for (let index = 0; index < this.state.routes.length; index++) {
+        for (let i = 0; i < this.state.routes.length; i++) {
             routeCards.push(
-            <Card key={index}>
+            <Card>
                 <Card.Body>
-                    <Card.Title>Route { index + 1 }</Card.Title>
-                    <Button onClick={this.handleViewRoute(index)}>View Route</Button>
+                    <Card.Title>Route {i + 1}</Card.Title>
+                    <Button onClick={() => {
+                        let processed_lat_lng = []
+                        console.log(i);
+                        console.log(this.state.routes);
+                        for (let index = 0; index < this.state.routes[i].length; index++) {
+                            //console.log(this.state.routes[index][i][0])
+                            processed_lat_lng.push({ lat: this.state.routes[i][index][0], lng: this.state.routes[i][index][1] })
+                        }
+                        //console.log(processed_lat_lng)
+                        this.setState({
+                            showDirections: true, displayedLine: (
+                                <Polyline
+                                    path={processed_lat_lng}
+                                    //path={[{lat:43.63708, lng:-79.407}, {lat:43.1, lng:-78.0}]}
+                                    geodesic={true}
+                                    options={{
+                                        strokeColor: "#ff2527",
+                                        strokeOpacity: 0.75,
+                                        strokeWeight: 2,
+
+                                    }} />)
+                        })
+                    }}>View Route</Button>
                     <Card.Subtitle>Rating: blah</Card.Subtitle>
                 </Card.Body>
             </Card>);
@@ -79,24 +127,26 @@ export default class Map extends React.Component {
         this.setState({ routeCards: routeCards });
     }
 
-    handleSubmit(event){
+    handleSubmit(event) {
         event.preventDefault();
         const link = "http://100.64.196.194:5000/test"
-        fetch(link, {method: "POST", body: JSON.stringify(
-            {
-                "locations": [
-                    this.state.origin,
-                    this.state.destination
-                ]
-            }
-        )})
-        .then(response => 
-          response.json()
-        ).then(data => {
-            this.setState({ routes: data.polyline})
-            console.log(data);
-            this.addCards();
-        });
+        fetch(link, {
+            method: "POST", body: JSON.stringify(
+                {
+                    "locations": [
+                        this.state.origin,
+                        this.state.destination
+                    ]
+                }
+            )
+        })
+            .then(response =>
+                response.json()
+            ).then(data => {
+                this.setState({ routes: data.polyline })
+                console.log(data);
+                this.addCards();
+            });
 
     }
 
@@ -110,31 +160,33 @@ export default class Map extends React.Component {
                             <Form onSubmit={this.handleSubmit}>
                                 <Form.Group controlId="origin">
                                     <Form.Label>Origin</Form.Label>
-                                    <Form.Control type="text" onChange={this.handleOriginChange}/>
+                                    <Form.Control type="text" onChange={this.handleOriginChange} />
                                 </Form.Group>
                                 <Form.Group controlId="destination">
                                     <Form.Label>Destination</Form.Label>
-                                    <Form.Control type="text" onChange={this.handleDestinationChange}/>
+                                    <Form.Control type="text" onChange={this.handleDestinationChange} />
                                 </Form.Group>
                                 <Button type="submit" value="Submit">Submit</Button>
                             </Form>
                         </div>
-                        { this.state.routeCards }
+                        {this.state.routeCards}
                     </Col>
                     <Col xs={8}>
                         <MapWithAMarker
                             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IOJ-wodRVvaKgYIHTyhDnt3WtVCAGNE&v=3.exp&libraries=geometry,drawing,places"
-                            loadingElement={<div style={{ height: "100vh", 
-                                width: '100%', 
-                                display: 'flex', 
-                                flexFlow: 'row nowrap', 
-                                justifyContent: 'center', 
-                                padding: 0 }} />}
+                            loadingElement={<div style={{
+                                height: "100vh",
+                                width: '100%',
+                                display: 'flex',
+                                flexFlow: 'row nowrap',
+                                justifyContent: 'center',
+                                padding: 0
+                            }} />}
                             containerElement={<div style={{ width: "100%", marginLeft: 0, marginRight: 0 }} />}
-                            mapElement={<div style={{ height: `100vh`, width: '100%'}} />}
+                            mapElement={<div style={{ height: `100vh`, width: '100%' }} />}
 
-                            showDirections={ this.state.showDirections }
-                            line={ this.state.displayedLine }
+                            showDirections={this.state.showDirections}
+                            line={this.state.displayedLine}
                         />
                     </Col>
                 </Row>
