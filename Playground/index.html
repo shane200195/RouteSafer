@@ -49,6 +49,13 @@
         }
         return points
     }
+    function draw(point, map){
+        var marker = new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        title: 'Hello World!'
+        });
+    }
     function initialize() {
 
         var map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -58,26 +65,34 @@
             },
             zoom: 10
         });
-        var array_encoded = ["e}niGvnqcNAGAMAQCg@", "o}niGflqcNLA~@FXBHA\\A", "_yniGllqcNpA}@PKBCHGLGFELCVINEHCLGLGFEBCHGBCJKLONUHSLUDODKBIPu@"]
-        const difference = 0.00001
+        var array_encoded = ["m}niG|dscN@RBJ@JBNPvAHj@Hf@^xCf@`EVpB?@VxBV|B?BRlB", "wvniG~etcN|Ag@pBk@f@M`@Mp@UJC", "kjniG|itcNhIeCrGmB"]
+
+        const difference = 0.0002
         console.log(encoded_data)
-        //(Math.abs(encoded_data[i]["lat"] - encoded_data[i+1]["lat"]) < difference && Math.abs(encoded_data[i]["lng"] - encoded_data[i+1]["lng"]) < difference)
+
         for(y=0; y<array_encoded.length; y++){
+
             var encoded_data = decode(array_encoded[y]);
             console.log(encoded_data)
-            
-            for(i=0; i< encoded_data.length-1; i++){
+            var pointer = 1
 
-                if {
+            //reference val
+            var lat_ref = encoded_data[0]['lat']
+            var lng_ref = encoded_data[0]['lng']
+            draw(encoded_data[0], map)
 
+            while (pointer < encoded_data.length-1){
+
+                if (Math.abs(lat_ref - encoded_data[pointer+1]['lat']) < difference || Math.abs(lng_ref - encoded_data[pointer+1]['lng']) < difference){
+                    encoded_data.splice(pointer+1,1)
                 }else{
-                    var marker = new google.maps.Marker({
-                        position: encoded_data[i],
-                        map: map,
-                        title: 'Hello World!'
-                    });
+                    lat_ref = encoded_data[pointer+1]['lat']
+                    lng_ref = encoded_data[pointer+1]['lng']
+                    pointer++
+                    draw(encoded_data[pointer], map)
                 }
             }
+            draw(encoded_data[pointer], map)
         }
     
         /*var decode = google.maps.geometry.encoding.decodePath(encoded_data);
