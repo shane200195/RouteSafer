@@ -44,10 +44,17 @@ export default class Map extends React.Component {
     }
 
     handleViewRoute(index) {
+        let processed_lat_lng = []
+        console.log(this.state.routes[index]);
+        for(let i=0; i<this.state.routes[index].length; i++){
+            //console.log(this.state.routes[index][i][0])
+            processed_lat_lng.push({lat:this.state.routes[index][i][0], lng: this.state.routes[index][i][1]})
+        }
+        //console.log(processed_lat_lng)
         this.setState({ showDirections: true, displayedLine: (
         <Polyline 
-            //path={this.state.routes[index]}
-            path={[{lat:43.63708, lng:-79.407}, {lat:43.1, lng:-78.0}]}
+            path={processed_lat_lng}
+            //path={[{lat:43.63708, lng:-79.407}, {lat:43.1, lng:-78.0}]}
             geodesic={true}
             options={{
                 strokeColor: "#ff2527",
