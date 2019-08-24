@@ -3,29 +3,6 @@ import { Form, Button, Card, Row, Col, Container } from 'react-bootstrap';
 import React from 'react';
 import './Map.css'
 
-class RouteCard extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    handleViewRoute(event, index) {
-
-    }
-
-    render() {
-        return (
-            <Card>
-                <Card.Body>
-                    <Card.Title>Route {this.props.index + 1}</Card.Title>
-                    <Button onClick={this.handleViewRoute(this.props.index)}>View Route</Button>
-                    <Card.Subtitle>Rating: blah</Card.Subtitle>
-                </Card.Body>
-            </Card>
-        );
-    }
-}
-
 
 const MapWithAMarker = withScriptjs(withGoogleMap(props =>
     <GoogleMap
