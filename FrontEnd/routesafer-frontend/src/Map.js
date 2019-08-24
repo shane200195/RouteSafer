@@ -1,5 +1,5 @@
 import { withScriptjs, withGoogleMap, GoogleMap,  DirectionsRenderer, Polyline } from "react-google-maps";
-import { Form, Button, Card } from 'react-bootstrap';
+import { Form, Button, Card, Row, Col, Container } from 'react-bootstrap';
 import React from 'react';
 import './Map.css'
 
@@ -97,8 +97,8 @@ export default class Map extends React.Component {
     render() {
         return (
             <div className="container" id="wrapper">
-                <div className="row">
-                    <div className="col-xs-1">
+                <Row>
+                    <Col xs={4} className="side-bar">
                         <div className="container" id="form">
                             <Form onSubmit={this.handleSubmit}>
                                 <Form.Group controlId="origin">
@@ -113,18 +113,24 @@ export default class Map extends React.Component {
                             </Form>
                         </div>
                         { this.state.routeCards }
-                    </div>
-                    <div className="col-xs-5">
+                    </Col>
+                    <Col xs={8}>
                         <MapWithAMarker
                             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IOJ-wodRVvaKgYIHTyhDnt3WtVCAGNE&v=3.exp&libraries=geometry,drawing,places"
-                            loadingElement={<div style={{ height: `100vh`, width: '900px'}} />}
-                            containerElement={<div style={{ height: `100vh`, width: '900px'}} />}
-                            mapElement={<div style={{ height: `100vh`, width: '900px'}} />}
+                            loadingElement={<div style={{ height: "100vh", 
+                                width: '100%', 
+                                display: 'flex', 
+                                flexFlow: 'row nowrap', 
+                                justifyContent: 'center', 
+                                padding: 0 }} />}
+                            containerElement={<div style={{ width: "100%", marginLeft: 0, marginRight: 0 }} />}
+                            mapElement={<div style={{ height: `100vh`, width: '100%'}} />}
+
                             showDirections={ this.state.showDirections }
                             line={ this.state.displayedLine }
                         />
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
         )
     }
