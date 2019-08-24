@@ -1,5 +1,5 @@
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
-import { Form, Button } from 'react-bootstrap';
+import { withScriptjs, withGoogleMap, GoogleMap,  DirectionsRenderer, Polyline } from "react-google-maps";
+import { Form, Button, Card } from 'react-bootstrap';
 import React from 'react';
 import './Map.css'
 
@@ -7,8 +7,12 @@ const MapWithAMarker = withScriptjs(withGoogleMap(props =>
     <GoogleMap
         defaultZoom={12}
         defaultCenter={{ lat: 43.656761, lng:  -79.380727}}>
+        {props.showDirections? <Polyline path={props.directions}></Polyline> : null}
     </GoogleMap>
 ));
+
+// "250 Fort York Blvd, Toronto, ON M5V 3K9"
+// "93 Front St E, Toronto, ON M5E 1C3"
 
 export default class Map extends React.Component {
 
@@ -16,11 +20,16 @@ export default class Map extends React.Component {
         super(props);
         this.state = {
             origin: '',
-            destination: ''
+            destination: '',
+            routes: [],
+            routeCards: [],
+            showDirections: false,
         }
+
         this.handleOriginChange = this.handleOriginChange.bind(this);
         this.handleDestinationChange = this.handleDestinationChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleViewRoute = this.handleViewRoute.bind(this);
     }
 
     handleOriginChange(event) {
@@ -33,18 +42,44 @@ export default class Map extends React.Component {
         this.setState({ destination: event.target.value });
     }
 
+    handleViewRoute(index) {
+
+    }
+
+    addCards(){
+        let routeCards = [];
+        for (let index = 0; index < this.state.routes.length; index++) {
+            routeCards.push(
+            <Card>
+                <Card.Body>
+                    <Card.Title>Route { index + 1 }</Card.Title>
+                    <Button onClick={this.handleViewRoute(index)}>View Route</Button>
+                    <Card.Subtitle>Rating: blah</Card.Subtitle>
+                </Card.Body>
+            </Card>);
+        }
+        this.setState({ routeCards: routeCards });
+    }
+
     handleSubmit(event){
         event.preventDefault();
-        const link = "https://maps.googleapis.com/maps/api/directions/json?origin=250 Fort York Blvd, Toronto, ON M5V 3K9&destination=93 Front St E, Toronto, ON M5E 1C3&key=AIzaSyCHttcfy83akWGX0yXCX53DnrVN1anZFEM&alternatives=true"
-        fetch(link, {method: "GET"})
-            .then(response => 
-            response.json().then(data => {
-            console.log(data)
-            })
-        );
-        //direction = Direction
-        console.log(this.state.origin, this.state.destination);
-        //take values -> renders route 
+        const link = "http://100.64.196.194:5000/test"
+        fetch(link, {method: "POST", body: JSON.stringify(
+            {
+                "locations": [
+                    this.state.origin,
+                    this.state.destination
+                ]
+            }
+        )})
+        .then(response => 
+          response.json()
+        ).then(data => {
+            this.setState({ routes: data.polyline, showDirections: true })
+            console.log(data);
+            this.addCards();
+        });
+
     }
 
 
@@ -66,6 +101,7 @@ export default class Map extends React.Component {
                                 <Button type="submit" value="Submit">Submit</Button>
                             </Form>
                         </div>
+                        { this.state.routeCards }
                     </div>
                     <div className="col-xs-5">
                         <MapWithAMarker
@@ -73,6 +109,8 @@ export default class Map extends React.Component {
                             loadingElement={<div style={{ height: `100vh`, width: '900px'}} />}
                             containerElement={<div style={{ height: `100vh`, width: '900px'}} />}
                             mapElement={<div style={{ height: `100vh`, width: '900px'}} />}
+                            showDirections={ this.state.showDirections }
+                            directions={ this.state.route }
                         />
                     </div>
                 </div>
