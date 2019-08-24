@@ -137,7 +137,7 @@ export default class Map extends React.Component {
                             <Form onSubmit={this.handleSubmit}>
                                 <Form.Group controlId="origin">
                                     <Form.Label>Origin</Form.Label>
-                                    <Form.Control type="text" onChange={this.handleOriginChange} />
+                                    <Form.Control type="text" onChange={this.handleOriginChange} autoFocus={true} />
                                 </Form.Group>
                                 <Form.Group controlId="destination">
                                     <Form.Label>Destination</Form.Label>
