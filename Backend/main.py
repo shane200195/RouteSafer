@@ -22,22 +22,25 @@ def test():
     from data_processing import analysis
     polylines = []
     Lat_and_Lng = []
-    test = requests.get('https://maps.googleapis.com/maps/api/directions/json?origin=250 Fort York Blvd, Toronto, ON M5V 3K9&destination=93 Front St E, Toronto, ON M5E 1C3&key=AIzaSyCHttcfy83akWGX0yXCX53DnrVN1anZFEM&alternatives=true').json()
+    origin = request.get_json(force=True)['locations'][0]
+    destination = request.get_json(force=True)['locations'][1]
+    test = requests.get("https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&key=AIzaSyCHttcfy83akWGX0yXCX53DnrVN1anZFEM&alternatives=true").json()
     routes = test['routes']
     #print(len(Lat_and_Lng[4]))
 
     for route in routes:
+        each_route = []
         for leg in route['legs']:
             for steps in leg['steps']:
-                polylines.append(steps['polyline']['points'])
-                Lat_and_Lng.append(polyline.decode(steps['polyline']['points']))
+                each_route += polyline.decode(steps['polyline']['points'])
                 #print(polyline.decode(steps['polyline']['points']))
+        Lat_and_Lng.append(each_route)
 
     #maybe the original Lat_and_Lng are being mixed up
-    print(len(Lat_and_Lng[11]))
-    print(len(analysis(Lat_and_Lng)[11]))
-
-    return jsonify({'polyline' : Lat_and_Lng})
+    print(len(Lat_and_Lng[0]))
+    print(len(analysis(Lat_and_Lng)[0]))
+    #return jsonify({'polyline' : Lat_and_Lng})
+    return jsonify({'polyline' : analysis(Lat_and_Lng)})
 
 #setting debug to true
 if __name__ == "__main__":

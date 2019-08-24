@@ -73,7 +73,7 @@ export default class Map extends React.Component {
             routeCards.push(
             <Card>
                 <Card.Body>
-                    <Card.Title>Route {i + 1}</Card.Title>
+                    <Card.Title>{this.state.origin} - {this.state.destination}</Card.Title>
                     <Button onClick={() => {
                         let processed_lat_lng = []
                         console.log(i);
@@ -97,7 +97,7 @@ export default class Map extends React.Component {
                                     }} />)
                         })
                     }}>View Route</Button>
-                    <Card.Subtitle>Rating: blah</Card.Subtitle>
+                    <Card.Subtitle class="rating">Rating: blah</Card.Subtitle>
                 </Card.Body>
             </Card>);
         }

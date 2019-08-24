@@ -25,7 +25,7 @@ def analysis(leg):
     test = leg[:]
     #declaring the initial variables
     pointer = 1
-    difference = 0.001
+    difference = 0.00005
     
     for array_decoded in test:
         lat_ref = array_decoded[0][0]
