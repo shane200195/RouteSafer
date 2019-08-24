@@ -65,7 +65,51 @@
             },
             zoom: 10
         });
-        var array_encoded = ["m}niG|dscN@RBJ@JBNPvAHj@Hf@^xCf@`EVpB?@VxBV|B?BRlB", "wvniG~etcN|Ag@pBk@f@M`@Mp@UJC", "kjniG|itcNhIeCrGmB"]
+        var list = [
+                            43.657265,
+                            -79.389526,
+                            43.656315,
+                            -79.389107,
+                            43.654816,
+                            -79.388496,
+                            43.654816,
+                            -79.388496,
+                            43.6548,
+                            -79.388672,
+                            43.654495,
+                            -79.390114,
+                            43.654499,
+                            -79.390594,
+                            43.654301,
+                            -79.391449,
+                            43.654301,
+                            -79.391449,
+                            43.653149,
+                            -79.39093,
+                            43.650166,
+                            -79.389732,
+                            43.650166,
+                            -79.389732,
+                            43.65065,
+                            -79.387459,
+                            43.65065,
+                            -79.387459,
+                            43.650349,
+                            -79.387283,
+                            43.649246,
+                            -79.386864,
+                            43.647388,
+                            -79.386078,
+                            43.647388,
+                            -79.386078,
+                            43.646461,
+                            -79.390411
+                        ]
+        
+        for (i=0; i<list.length; i+=2){
+            draw({lat:list[i], lng:list[i+1]}, map)
+        }
+        /*var array_encoded = ["m}niG|dscN@RBJ@JBNPvAHj@Hf@^xCf@`EVpB?@VxBV|B?BRlB", "wvniG~etcN|Ag@pBk@f@M`@Mp@UJC", "kjniG|itcNhIeCrGmB"]
 
         const difference = 0.0002
         console.log(encoded_data)
@@ -92,8 +136,7 @@
                     draw(encoded_data[pointer], map)
                 }
             }
-            draw(encoded_data[pointer], map)
-        }
+            draw(encoded_data[pointer], map)*/
     
         /*var decode = google.maps.geometry.encoding.decodePath(encoded_data);
         console.log(decode)

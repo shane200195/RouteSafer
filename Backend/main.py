@@ -1,7 +1,9 @@
 import flask
 from flask import render_template, Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__, template_folder="templates-flask-test")
+CORS(app)
 
 #setting the mode
 app.config['ENV'] = 'development'
@@ -15,12 +17,12 @@ def start():
 
 @app.route("/test", methods=["POST"])
 def test():
-    #val = request.get_json(force=True)['name']
-    print("Hello world")
+    val = request.get_json(force=True)['location']
+    print(val)
     return "Hello"
 
 #setting debug to true
 if __name__ == "__main__":
     app.run(host = '0.0.0.0')
 
-#http://100.64.196.194:5000/
+#http://100.64.196.194:5000/test

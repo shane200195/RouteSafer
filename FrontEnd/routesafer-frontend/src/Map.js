@@ -35,6 +35,22 @@ export default class Map extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
+        const link = "http://www.mapquestapi.com/directions/v2/alternateroutes?key=cWoBbdQDVccb4o05En8naNgZkdvYis17"
+        fetch(link, {method: "POST", body: JSON.stringify(
+            {
+                "locations": [
+                    "250 Fort York Blvd, Toronto, ON M5V 3K9",
+                    "93 Front St E, Toronto, ON M5E 1C3"
+                ],
+                "maxRoutes": 200,
+                "timeOverage": 1000
+            }
+        )})
+        .then(response => 
+          response.json().then(data => {
+          console.log(data)
+        })
+        );
         console.log(this.state.origin, this.state.destination);
         //take values -> renders route 
     }
