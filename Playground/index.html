@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #map-canvas {
+            height: 400px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="map-canvas"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHttcfy83akWGX0yXCX53DnrVN1anZFEM&libraries=geometry"></script>
+    <script>
+        function decode(encoded){
+
+// array that holds the points
+
+        var points=[ ]
+        var index = 0, len = encoded.length;
+        var lat = 0, lng = 0;
+        while (index < len) {
+            var b, shift = 0, result = 0;
+            do {
+
+        b = encoded.charAt(index++).charCodeAt(0) - 63;//finds ascii                                                                                    //and substract it by 63
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+                } while (b >= 0x20);
+
+
+        var dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        shift = 0;
+        result = 0;
+        do {
+            b = encoded.charAt(index++).charCodeAt(0) - 63;
+            result |= (b & 0x1f) << shift;
+        shift += 5;
+            } while (b >= 0x20);
+        var dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+
+        //points.push({latitude:( lat / 1E5),longitude:( lng / 1E5)})
+        points.push({lat: lat/1E5, lng: lng/1E5})
+        }
+        return points
+    }
+    function draw(point, map){
+        var marker = new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        title: 'Hello World!'
+        });
+    }
+    function initialize() {
+
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: {
+                lat: 43.653225,
+                lng: -79.383
+            },
+            zoom: 10
+        });
+        var array_encoded = ["m}niG|dscN@RBJ@JBNPvAHj@Hf@^xCf@`EVpB?@VxBV|B?BRlB", "wvniG~etcN|Ag@pBk@f@M`@Mp@UJC", "kjniG|itcNhIeCrGmB"]
+
+        const difference = 0.0002
+        console.log(encoded_data)
+
+        for(y=0; y<array_encoded.length; y++){
+
+            var encoded_data = decode(array_encoded[y]);
+            console.log(encoded_data)
+            var pointer = 1
+
+            //reference val
+            var lat_ref = encoded_data[0]['lat']
+            var lng_ref = encoded_data[0]['lng']
+            draw(encoded_data[0], map)
+
+            while (pointer < encoded_data.length-1){
+
+                if (Math.abs(lat_ref - encoded_data[pointer+1]['lat']) < difference || Math.abs(lng_ref - encoded_data[pointer+1]['lng']) < difference){
+                    encoded_data.splice(pointer+1,1)
+                }else{
+                    lat_ref = encoded_data[pointer+1]['lat']
+                    lng_ref = encoded_data[pointer+1]['lng']
+                    pointer++
+                    draw(encoded_data[pointer], map)
+                }
+            }
+            draw(encoded_data[pointer], map)
+        }
+    
+        /*var decode = google.maps.geometry.encoding.decodePath(encoded_data);
+        console.log(decode)
+        var line = new google.maps.Polyline({
+            path: decode,
+            strokeColor: '#00008B',
+            strokeOpacity: 1.0,
+            strokeWeight: 4,
+            zIndex: 3
+        });
+    
+        line.setMap(map);*/
+    }
+    
+    initialize();
+    </script>
+</body>
+</html>
