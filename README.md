@@ -6,7 +6,7 @@ Toronto being one of the busiest cities in the world, is faced with tremendous a
 
 ## What it does
 
-Leveraging AI technology, RouteSafe provides safer alternatives to Google Map routes and aims to reduce automotive collisions in cities. Using machine learning algorithms such as k-nearest neighbours, RouteSafe analyzes over 20 years of collision data and uses over 11 parameters to make an intelligent estimate about the safety of a route, and ensure the user arrives safe.
+Leveraging AI technology, RouteSafer provides safer alternatives to Google Map routes and aims to reduce automotive collisions in cities. Using machine learning algorithms such as k-nearest neighbours, RouteSafer analyzes over 20 years of collision data and uses over 11 parameters to make an intelligent estimate about the safety of a route, and ensure the user arrives safe.
 
 ## How I built it
 
@@ -36,10 +36,10 @@ Working on RouteSafer has helped each one of us gain soft skills and technical s
 
 ## What's next for RouteSafer
 
-Moving forward we see RouteSafe expanding to other large cities like New York, Boston, and Vancouver. Car accidents are a pressing issue in all metropolitan areas, and we want RouteSafe there to prevent them. If one day RouteSafe could be fully integrated into Google Maps, and could be provided on any global route, our goal would be achieved. 
+Moving forward we see RouteSafer expanding to other large cities like New York, Boston, and Vancouver. Car accidents are a pressing issue in all metropolitan areas, and we want RouteSafer there to prevent them. If one day RouteSafer could be fully integrated into Google Maps, and could be provided on any global route, our goal would be achieved. 
 
 In addition, we aim to expand our coverage by using Google Places data alongside collision data collected by various police forces. Google Places data will further enhance our model and allow us to better serve our customers. 
 
-Finally, we see RouteSafe partnering with a number of large insurance companies that would like to use the service to better protect their customers, provide lower premiums, and cut costs on claims. Partnering with a large insurance company would also give RouteSafe the ability to train and vastly improve its model. 
+Finally, we see RouteSafer partnering with a number of large insurance companies that would like to use the service to better protect their customers, provide lower premiums, and cut costs on claims. Partnering with a large insurance company would also give RouteSafer the ability to train and vastly improve its model. 
 
-To summarize, we want RouteSafe to grow and keep drivers safe across the Globe!
+To summarize, we want RouteSafer to grow and keep drivers safe across the Globe!
