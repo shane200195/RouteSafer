@@ -36,17 +36,20 @@ def start():
 def test():
     from data_processing import analysis
     from KNN import NearestNeighbours
-    #Lat_and_Lng = []
+    #from RouteModel import RouteSafer
+    Lat_and_Lng = []
     origin = request.get_json(force=True)['locations'][0]
     destination = request.get_json(force=True)['locations'][1]
     
     Lat_and_Lng = fetching_lat_lng(origin, destination)
 
     Analyze = analysis(Lat_and_Lng)
+    score = []
     for i in Analyze:
-        print(NearestNeighbours(i))
+        score.append(NearestNeighbours(i))
     #test
-    return jsonify({'polyline' : Analyze})
+    #test = RouteSafer(1,1,1,1,2,2,2)
+    return jsonify({'polyline' : Analyze, 'score': score, 'origin': Lat_and_Lng[0][0], 'destination':Lat_and_Lng[0][-1]})
 
 
 #setting debug to true
