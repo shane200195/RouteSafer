@@ -10,6 +10,14 @@ Leveraging AI technology, RouteSafe provides safer alternatives to Google Map ro
 
 ## How I built it
 
+The path to implement RouteSafer starts with developing rough architecture that shows different modules of the project being independently built and at the same time being able to interact with each other in an efficient way. We divided the project into 3 different segments of UI, Backend and AI handled by Sherley, Shane & Hanz and Tanvir respectively.
+
+The product leverages extensive API usage for different and diverse purposes including Google map API, AWS API and Kaggle API. Technologies involve React.js for front end, Flask for web services and Python for Machine Learning along with AWS to deploy it on the cloud.
+
+The dataset ‘KSI’ was downloaded from Kaggle and has records from 2014 to 2018 on major accidents that took place in the city of Toronto. The dataset required a good amount of preprocessing because of its inconsistency, the techniques involving OneHotEncoder, Dimensionality reduction, Filling null or None values and also data featuring. This made sure that the data is consistent for all future challenges.
+
+The Machine Learning usage gives the project a smart way to solve our problem, the use of K-Means clustering gave our dataset the feature to extract the risk level while driving on a particular street. The Google API feature gets us different routes and the model helps to give it a risk feature hence making your travel route safer.
+
 ## Challenges I ran into
 
 One of the first challenges that we ran into as a team was learning how to properly integrate the Google Maps API polyline, and accurately converting the compressed string into numerical values expressing longitudes and latitudes. We finally solved this first challenge through lots of research, and even more stackoverflow searches 🙂 
@@ -24,7 +32,7 @@ The thing that we were most proud of was the fact that we reached all of our ini
 
 ## What I learned
 
-
+Working on RouteSafer has helped each one of us gain soft skills and technical skills. Some of us had no prior experience with technologies on our stack and working together helped to share the knowledge like the use of React.js and Machine Learning. The guidance provided on AWS gave us all insights to the big and great world of cloud computing using the world’s leading cloud computing provider. Apart from technical skills leveraging the skill of team work and communication was something we all benefitted from, and will take with us in the future.
 
 ## What's next for RouteSafer
 
