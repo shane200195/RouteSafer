@@ -1,14 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import Home from './Home';
 import Map from './Map';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 
 function App() {
   return (
     <div className="App">
-      <Map />
+      <BrowserRouter>
+          <switch>
+            <Route exact path='/'  component={Home} />
+            <Route exact path='/map' component={Map} />
+          </switch>
+        </BrowserRouter>
     </div>
   );
 }
