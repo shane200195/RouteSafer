@@ -1,5 +1,8 @@
 # RouteSafer
 
+##Demo
+https://youtu.be/zO_2NxpAYOk
+
 ## Inspiration
 
 Toronto being one of the busiest cities in the world, is faced with tremendous amounts of traffic, whether it is pedestrians, commuters, bikers or drivers. With these comes an increased risk of crashes, and accidents, making methods of safe travel an ever-pressing issue, not only for those in Toronto, but for all people living in Metropolitan areas. This led us to explore possible solutions to such a problem, as we believe that all accidents should be tackled proactively, emphasizing on prevention rather than attempting to better deal with the after effects. Hence, we devised an innovative solution for this problem, which at its core is utilizing machine learning to predict routes/streets that are likely to be dangerous, and advises you on which route to take wherever you want to go. 
