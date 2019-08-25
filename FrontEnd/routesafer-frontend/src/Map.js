@@ -46,7 +46,6 @@ export default class Map extends React.Component {
 
     handleViewRoute(index) {
         let processed_lat_lng = []
-        console.log(this.state.routes[index]);
         for (let i = 0; i < this.state.routes[index].length; i++) {
             //console.log(this.state.routes[index][i][0])
             processed_lat_lng.push({ lat: this.state.routes[index][i][0], lng: this.state.routes[index][i][1] })
@@ -62,7 +61,6 @@ export default class Map extends React.Component {
                         strokeColor: "#ff2527",
                         strokeOpacity: 0.75,
                         strokeWeight: 2,
-
                     }} />)
         })
     }
@@ -121,10 +119,9 @@ export default class Map extends React.Component {
                 response.json()
             ).then(data => {
                 this.setState({ routes: data.polyline })
-                console.log(data);
+                this.handleViewRoute(0)
                 this.addCards();
             });
-
     }
 
 
