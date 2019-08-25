@@ -32,6 +32,8 @@ export default class Map extends React.Component {
         this.state = {
             origin: '',
             destination: '',
+            cardOrigin: '',
+            cardDestination: '', 
             routes: [],
             routeCards: [],
             showDirections: false,
@@ -91,8 +93,13 @@ export default class Map extends React.Component {
                 response.json()
             ).then(data => {
                 this.setState({ routes: data.polyline,
-                routeCards: data.polyline });
-                this.handleViewRoute(0)
+                routeCards: data.polyline,
+                cardOrigin: this.state.origin,
+                cardDestination: this.state.destination,
+
+             });
+                this.handleViewRoute(0);
+                
             });
     }
 
@@ -119,7 +126,7 @@ export default class Map extends React.Component {
                         {   this.state.routeCards.map((value, i) => {return(
                             <Card className={this.state.cardSelected === i ? "selected-card": "card"}>
                             <Card.Body>
-                                <Card.Title>{this.state.origin} - {this.state.destination}</Card.Title>
+                                <Card.Title>{this.state.cardOrigin} - {this.state.cardDestination}</Card.Title>
                                 <Button onClick={() => {
                       
                                     console.log(this.state.cardSelected);
