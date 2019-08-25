@@ -35,24 +35,18 @@ def start():
 @app.route("/test", methods=["POST"])
 def test():
     from data_processing import analysis
+    from KNN import NearestNeighbours
     #Lat_and_Lng = []
     origin = request.get_json(force=True)['locations'][0]
     destination = request.get_json(force=True)['locations'][1]
-    """test = requests.get("https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&key=AIzaSyCHttcfy83akWGX0yXCX53DnrVN1anZFEM&alternatives=true").json()
-    routes = test['routes']
-    #print(len(Lat_and_Lng[4]))
-
-    for route in routes:
-        each_route = []
-        for leg in route['legs']:
-            for steps in leg['steps']:
-                each_route += polyline.decode(steps['polyline']['points'])
-                #print(polyline.decode(steps['polyline']['points']))
-        Lat_and_Lng.append(each_route)"""
+    
     Lat_and_Lng = fetching_lat_lng(origin, destination)
-    print(len(Lat_and_Lng[0]))
-    print(len(analysis(Lat_and_Lng)[0]))
-    return jsonify({'polyline' : analysis(Lat_and_Lng)})
+
+    Analyze = analysis(Lat_and_Lng)
+    for i in Analyze:
+        print(NearestNeighbours(i))
+    #test
+    return jsonify({'polyline' : Analyze})
 
 
 #setting debug to true
