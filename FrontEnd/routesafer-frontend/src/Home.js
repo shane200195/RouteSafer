@@ -71,7 +71,7 @@ class Home extends Component {
                                 <Col><img src={ai2icon} className="about-icon"/></Col>
                                 <Col><img src={CarCrashIcon} className="about-icon" /></Col>
                             </Row>
-                            <Row>
+                            <Row style={{color: 'white'}}>
                                 <Col>
                                     <p>Leveraging AI technology, RouteSafe provides safer alternatives to Google Map routes and aims to reduce automotive collisions in cities. </p>
                                 </Col>
@@ -79,7 +79,7 @@ class Home extends Component {
                                     <p>Using machine learning algorithms such as k-nearest neighbors, RouteSafe analyzes over 20 years of collision data and uses over 11 parameters to make an intelligent estimate about the safety of a route, and ensure the user arrives safe.</p>
                                 </Col>
                                 <Col>
-                                <p>RouteSafer’s machine learning model can also help insurance companies evaluate the risk in a  driver’s everyday commute, thus helping the insurance provider to more accurately value premiums. </p>
+                                    <p>RouteSafer’s machine learning model can also help insurance companies evaluate the risk in a  driver’s everyday commute, thus helping the insurance provider to more accurately value premiums. </p>
                                 </Col>
                             </Row>
                             </Container>

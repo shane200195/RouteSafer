@@ -227,11 +227,11 @@ export default class Map extends React.Component {
                           className={"circle-" + this.state.routeScore[i]}
                         ></div>
                         {this.state.routeScore[i] === "green" ? (
-                          <p> Safe </p>
+                          <p style={{color: '#212529'}}> Safe </p>
                         ) : this.state.routeScore[i] === "red" ? (
-                          <p> Dangerous </p>
+                          <p style={{color: '#212529'}}> Dangerous </p>
                         ) : (
-                          <p> Moderate </p>
+                          <p style={{color: '#212529'}}> Moderate </p>
                         )}
                       </div>
                     </Card.Subtitle>
