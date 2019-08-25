@@ -51,9 +51,9 @@ export default class Map extends React.Component {
       cardSelected: 0,
       score: [],
       bestRoute: "",
-      route0: "",
-      route1: "",
-      route2: ""
+      routeScore: [],
+      originCoor: [],
+      destinationCoor: [],
     };
     this.handleOriginChange = this.handleOriginChange.bind(this);
     this.handleDestinationChange = this.handleDestinationChange.bind(this);
@@ -113,7 +113,10 @@ export default class Map extends React.Component {
           routes: data.polyline,
           routeCards: data.polyline,
           cardOrigin: this.state.origin,
-          cardDestination: this.state.destination
+          cardDestination: this.state.destination,
+
+          originCoor: data.origin,
+          destinationCoor: data.destination,
         });
         console.log(this.state.score);
         this.computeScore();
@@ -122,56 +125,26 @@ export default class Map extends React.Component {
   }
 
   computeScore() {
-    for (let i = 0; i < this.state.score.length - 1; i++) {
-      var best = 10000;
+    let routeScores = [];
+    for (let i = 0; i < this.state.score.length; i++) {
+      let best = 10000;
       if (this.state.score[i] < best) {
         best = this.state.score[i];
       }
-      var routeScore = {};
+      let color = "";
       if (this.state.score[i] <= 2) {
-        routeScore = {
-          num: "route" + i,
-          color: "green"
-        };
+        color = "green";
       } else if (this.state.score[i] > 2 && this.state.score[i] <= 5) {
-        routeScore = {
-          num: "route" + i,
-          color: "yellow"
-        };
+        color = "yellow";
       } else {
-        routeScore = {
-          num: "route" + i,
-          color: "red"
-        };
+        color = "red";
       }
+      console.log(color);
+      routeScores.push(color);
     }
     this.setState({
-      [routeScore.num]: [routeScore.color]
+      routeScore: routeScores
     });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    const link = "http://100.64.196.194:5000/test";
-    fetch(link, {
-      method: "POST",
-      body: JSON.stringify({
-        locations: [this.state.origin, this.state.destination]
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({
-          routes: data.polyline,
-          routeCards: data.polyline,
-          cardOrigin: this.state.origin,
-          cardDestination: this.state.destination,
-          originCoor: data.origin,
-          destinationCoor: data.destination
-        });
-        this.handleViewRoute(0);
-      });
   }
 
   render() {
@@ -249,7 +222,18 @@ export default class Map extends React.Component {
                       View Route
                     </Button>
                     <Card.Subtitle className="rating">
-                      Rating: blah
+                      <div className="circle-container">
+                        <div
+                          className={"circle-" + this.state.routeScore[i]}
+                        ></div>
+                        {this.state.routeScore[i] === "green" ? (
+                          <p> Safe </p>
+                        ) : this.state.routeScore[i] === "red" ? (
+                          <p> Dangerous </p>
+                        ) : (
+                          <p> Moderate </p>
+                        )}
+                      </div>
                     </Card.Subtitle>
                   </Card.Body>
                 </Card>
