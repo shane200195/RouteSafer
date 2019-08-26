@@ -1,5 +1,8 @@
 # RouteSafer
-
+Developed in collaboration with:
+Hanz Vora,
+Tanvir Tuggal,
+Shirley Zhang
 ## Demo
 https://youtu.be/zO_2NxpAYOk
 
