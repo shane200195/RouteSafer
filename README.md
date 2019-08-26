@@ -1,8 +1,5 @@
 # RouteSafer
-Developed in collaboration with:
-Hanz Vora,
-Tanvir Tuggal,
-Shirley Zhang
+Developed in collaboration with: Hanz Vora, Tanvir Tuggal, Shirley Zhang for Hack the 6ix 2019, winner of best overall hack and best insurance hack.
 ## Demo
 https://youtu.be/zO_2NxpAYOk
 
